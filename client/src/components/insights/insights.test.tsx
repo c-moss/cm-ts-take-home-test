@@ -17,6 +17,7 @@ const TEST_INSIGHTS = [
 ];
 
 describe("insights", () => {
+  //TODO: expand tests to examine all fields and list items, using data-testid to find elements
   it("renders", () => {
     const { getByText } = render(<Insights insights={TEST_INSIGHTS} />);
     expect(getByText(TEST_INSIGHTS[0].text)).toBeTruthy();
