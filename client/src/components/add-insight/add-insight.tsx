@@ -7,14 +7,18 @@ import { useState } from "react";
 type AddInsightProps = ModalProps;
 
 export const AddInsight = (props: AddInsightProps) => {
-  const [brand, setBrand] = useState(0);
-  const [text, setText] = useState("");
+  const FORM_FIELDS = {
+    BRAND_ID: 'brandId',
+    INSIGHT_TEXT: 'insightText'
+  }
 
   const addInsight = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    //TODO: For simplicity, data is being pulled from submitted form fields via Reatc.FormEvent. In future, we should use either useState or a form library to enable validation and error handling
+    const formData = new FormData(event.currentTarget);
     fetch(`api/insights`, {
        method: "POST",
-       body: JSON.stringify({brand: brand, text: text})
+       body: JSON.stringify({brand: formData.get(FORM_FIELDS.BRAND_ID), text: formData.get(FORM_FIELDS.INSIGHT_TEXT)})
      })
   };
 
@@ -24,8 +28,8 @@ export const AddInsight = (props: AddInsightProps) => {
       <form className={styles.form} onSubmit={addInsight}>
         <label className={styles.field}>
           <select
+            name={FORM_FIELDS.BRAND_ID}
             className={styles["field-input"]}
-            onChange={(event) => setBrand(Number(event.target.value))}
           >
             {BRANDS.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
           </select>
@@ -33,10 +37,10 @@ export const AddInsight = (props: AddInsightProps) => {
         <label className={styles.field}>
           Insight
           <textarea
+            name={FORM_FIELDS.INSIGHT_TEXT}
             className={styles["field-input"]}
             rows={5}
             placeholder="Something insightful..."
-            onChange={(event) => setText(event.target.value)}
           />
         </label>
         <Button className={styles.submit} type="submit" label="Add insight" />
