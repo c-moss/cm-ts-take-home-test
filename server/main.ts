@@ -5,6 +5,8 @@ import * as path from "@std/path";
 import { Port } from "../lib/utils/index.ts";
 import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
+import addInsight from "./operations/add-insight.ts";
+// import * as insightsTable from "$tables/insights.ts";
 
 console.log("Loading configuration");
 
@@ -18,6 +20,7 @@ console.log(`Opening SQLite database at ${dbFilePath}`);
 
 await Deno.mkdir(path.dirname(dbFilePath), { recursive: true });
 const db = new Database(dbFilePath);
+// db.exec(insightsTable.createTable);
 
 console.log("Initialising server");
 
@@ -41,8 +44,12 @@ router.get("/insights/:id", (ctx) => {
   ctx.response.status = 200;
 });
 
-router.get("/insights/create", (ctx) => {
-  // TODO
+router.post("/insights", async (ctx) => {
+  //TODO: validate request body
+  const insight = await ctx.request.body.json();
+  const result = addInsight({ db, brand: insight.brand, text: insight.text });
+  ctx.response.body = result;
+  ctx.response.status = 201;
 });
 
 router.get("/insights/delete", (ctx) => {
