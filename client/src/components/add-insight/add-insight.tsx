@@ -1,8 +1,8 @@
+import { useInsightsContext } from "../../hooks/InsightsContext.tsx";
 import { BRANDS } from "../../lib/consts.ts";
 import { Button } from "../button/button.tsx";
 import { Modal, type ModalProps } from "../modal/modal.tsx";
 import styles from "./add-insight.module.css";
-import { useState } from "react";
 
 type AddInsightProps = ModalProps;
 
@@ -11,6 +11,7 @@ export const AddInsight = (props: AddInsightProps) => {
     BRAND_ID: 'brandId',
     INSIGHT_TEXT: 'insightText'
   }
+  const { setNeedsRefresh } = useInsightsContext();
 
   const addInsight = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,9 +20,12 @@ export const AddInsight = (props: AddInsightProps) => {
     fetch(`api/insights`, {
        method: "POST",
        body: JSON.stringify({brand: formData.get(FORM_FIELDS.BRAND_ID), text: formData.get(FORM_FIELDS.INSIGHT_TEXT)})
+     }).then(response => {
+      if (response.ok) {
+        setNeedsRefresh(true);
+      } //TODO: handle POST error
+      props.onClose();
      })
-     //TODO: handle POST error
-     //TODO: on success, close modal and refresh insights list
   };
 
   return (
