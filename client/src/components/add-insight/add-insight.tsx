@@ -20,6 +20,8 @@ export const AddInsight = (props: AddInsightProps) => {
        method: "POST",
        body: JSON.stringify({brand: formData.get(FORM_FIELDS.BRAND_ID), text: formData.get(FORM_FIELDS.INSIGHT_TEXT)})
      })
+     //TODO: handle POST error
+     //TODO: on success, close modal and refresh insights list
   };
 
   return (

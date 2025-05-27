@@ -20,6 +20,7 @@ console.log(`Opening SQLite database at ${dbFilePath}`);
 
 await Deno.mkdir(path.dirname(dbFilePath), { recursive: true });
 const db = new Database(dbFilePath);
+//TODO: need a way to initialise DB schema. For now I'veadded the table manually on the following line, and  then commented it out
 // db.exec(insightsTable.createTable);
 
 console.log("Initialising server");
