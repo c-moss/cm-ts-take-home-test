@@ -5,7 +5,7 @@ type Input = HasDBClient & {
 };
 
 export default (input: Input): boolean => {
-  console.log("Deleting insight");
+  console.log(`Deleting insight for id=${input.id}`);
 
   const result = input.db.exec(
     `DELETE FROM insights WHERE id = ${input.id}`,
