@@ -6,7 +6,6 @@ import styles from "./app.module.css";
 import type { Insight } from "../schemas/insight.ts";
 import { useInsightsContext } from "../hooks/InsightsContext.tsx";
 
-
 export const App = () => {
   const [insights, setInsights] = useState<Insight[]>([]);
   const { needsRefresh, setNeedsRefresh } = useInsightsContext();
@@ -16,13 +15,13 @@ export const App = () => {
   useEffect(() => {
     if (needsRefresh) {
       fetch(`/api/insights`)
-        .then(res => res.json())
-        .then(insights => { //TODO: resposne validation
+        .then((res) => res.json())
+        .then((insights) => { //TODO: resposne validation
           setInsights(insights);
           setNeedsRefresh(false);
         })
-        .catch(error => {
-          console.error('Failed to fetch insights:', error);
+        .catch((error) => {
+          console.error("Failed to fetch insights:", error);
           setNeedsRefresh(false);
         });
     }

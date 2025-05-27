@@ -9,11 +9,7 @@ const TEST_INSIGHTS = [
     createdAt: new Date(),
     text: "Test insight",
   },
-  { id: 2,
-    brand: 2,
-    createdAt: new Date(),
-    text: "Another test insight" 
-  },
+  { id: 2, brand: 2, createdAt: new Date(), text: "Another test insight" },
 ];
 
 describe("insights", () => {
@@ -27,5 +23,4 @@ describe("insights", () => {
     const { getByText } = render(<Insights insights={[]} />);
     expect(getByText("We have no insight!")).toBeTruthy();
   });
-
 });

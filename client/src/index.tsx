@@ -6,5 +6,5 @@ import { InsightsProvider } from "./hooks/InsightsContext.tsx";
 createRoot(document.getElementById("root")!).render(
   <InsightsProvider>
     <App />
-  </InsightsProvider>
+  </InsightsProvider>,
 );

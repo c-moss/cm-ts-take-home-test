@@ -12,17 +12,16 @@ type InsightsProps = {
 };
 
 export const Insights = ({ insights, className }: InsightsProps) => {
-
   const { setNeedsRefresh } = useInsightsContext();
 
   const deleteInsight = (brandId: number) => {
     fetch(`api/insights/${brandId}`, {
       method: "DELETE",
-    }).then(response => {
+    }).then((response) => {
       if (response.ok) {
         setNeedsRefresh(true);
       }
-    })
+    });
   };
 
   return (
@@ -34,7 +33,11 @@ export const Insights = ({ insights, className }: InsightsProps) => {
             insights.map(({ id, text, createdAt, brand }) => (
               <div className={styles.insight} key={id}>
                 <div className={styles["insight-meta"]}>
-                  <span>{BRANDS.find( b => b.id === brand)?.name ?? brand}</span>
+                  <span>
+                    {BRANDS.find((b) =>
+                      b.id === brand
+                    )?.name ?? brand}
+                  </span>
                   <div className={styles["insight-meta-details"]}>
                     <span>{new Date(createdAt).toLocaleString()}</span>
                     <Trash2Icon

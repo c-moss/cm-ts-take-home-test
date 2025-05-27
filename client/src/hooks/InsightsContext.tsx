@@ -9,22 +9,26 @@ const InsightsContext = createContext<InsightsContext>({
   needsRefresh: false,
   setNeedsRefresh: function (): void {
     throw new Error("Function not implemented.");
-  }
+  },
 });
 
-export const InsightsProvider = ({ children }: { children: React.ReactNode }) => {
+export const InsightsProvider = (
+  { children }: { children: React.ReactNode },
+) => {
   const [needsRefresh, setNeedsRefresh] = useState(false);
   return (
     <InsightsContext.Provider value={{ needsRefresh, setNeedsRefresh }}>
       {children}
     </InsightsContext.Provider>
   );
-}
+};
 
 export const useInsightsContext = () => {
   const context = useContext(InsightsContext);
   if (!context) {
-    throw new Error("useInsightsContext must be used within an InsightsProvider");
+    throw new Error(
+      "useInsightsContext must be used within an InsightsProvider",
+    );
   }
   return context;
-}
+};
