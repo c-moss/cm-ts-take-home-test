@@ -3,6 +3,7 @@ import { cx } from "../../lib/cx.ts";
 import styles from "./insights.module.css";
 import type { Insight } from "../../schemas/insight.ts";
 import { BRANDS } from "../../lib/consts.ts";
+import { useInsightsContext } from "../../hooks/InsightsContext.tsx";
 
 type InsightsProps = {
   insights: Insight[];
@@ -10,7 +11,18 @@ type InsightsProps = {
 };
 
 export const Insights = ({ insights, className }: InsightsProps) => {
-  const deleteInsight = () => undefined;
+
+  const { setNeedsRefresh } = useInsightsContext();
+
+  const deleteInsight = (brandId: number) => {
+    fetch(`api/insights/${brandId}`, {
+      method: "DELETE",
+    }).then(response => {
+      if (response.ok) {
+        setNeedsRefresh(true);
+      }
+    })
+  };
 
   return (
     <div className={cx(className)}>
@@ -26,7 +38,7 @@ export const Insights = ({ insights, className }: InsightsProps) => {
                     <span>{new Date(createdAt).toLocaleString()}</span>
                     <Trash2Icon
                       className={styles["insight-delete"]}
-                      onClick={deleteInsight}
+                      onClick={() => deleteInsight(id)}
                     />
                   </div>
                 </div>
