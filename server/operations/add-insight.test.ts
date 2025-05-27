@@ -34,7 +34,7 @@ describe("adding insights to the database", () => {
         const rows = fixture.insights.selectAll();
         expect(rows.length).toBe(1);
         const stored = rows.find(
-          (it) => it.id === result?.id,
+          (row) => row.id === result?.id,
         );
         expect(stored).toBeDefined();
         expect(stored?.createdAt).toBe(result?.createdAt.toISOString());
